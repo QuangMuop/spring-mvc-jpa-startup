@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!--    <security:http>
+        <security:http-basic></security:http-basic>
+        <security:intercept-url method="POST" pattern="/**" access="ROLE_USER"/>
+    </security:http>-->
+
+    <security:http auto-config="true">
+        <security:form-login
+                login-page="/login" login-processing-url="/loginProcess"
+                default-target-url="/inbox"
+                authentication-failure-url="/login?login_error=1"/>
+        <security:logout
+                logout-url="/pages/logout"
+                logout-success-url="/logoutSuccess"/>
+        <!--
+        <security:custom-filter before="FORM_LOGIN_FILTER"
+                                ref="facebookAuthenticationFilter"/>-->
+    </security:http>
+
+    <security:authentication-manager alias="authenticationManager">
+        <security:authentication-provider>
+            <security:user-service>
+                <security:user name="admin" password="admin" authorities="ROLE_ADMIN"/>
+            </security:user-service>
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+    <security:authentication-manager alias="authenticationManager">
+        <security:authentication-provider>
+            <security:user-service>
+                <security:user name="admin" password="admin" authorities="ROLE_ADMIN"/>
+            </security:user-service>
+        </security:authentication-provider>
+        <security:authentication-provider ref="authenticationProviderFacebook">
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+    <!--<bean id="facebookAuthenticationFilter" class="com.springjpagjpa.facebook.FacebookUserFilter" />-->
+</beans>
