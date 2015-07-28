@@ -1,0 +1,1 @@
+Spring 3 MVC-JPA2 Quick Startup Project
